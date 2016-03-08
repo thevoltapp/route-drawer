@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Route Drawer</title>
+    <style type="text/css">
+    	#map {
+    		width: 800px;
+    		height: 500px;
+    	}
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+<div class="generate-area">
+    <p>A - Blue<br>
+    Lat 1: <input id="lat1a" /> Lng 1: <input id="lng1a" />
+    Lat 2: <input id="lat2a" /> Lng 2: <input id="lng2a" />
+    </p>
+    <p>
+    B - Red<br>
+    Lat 1: <input id="lat1b" /> Lng 1: <input id="lng1b" />
+    Lat 2: <input id="lat2b" /> Lng 2: <input id="lng2b" />
+    </p>
+    <button class="btn" onclick="drawRoutes()">Draw!</button>
+    <button class="btn" onclick="cleanRoutes()">Clean!</button>
+</div>
+<script src="http://code.jquery.com/jquery-1.9.0.min.js"></script>
+<script src="https://maps.google.com/maps/api/js?sensor=true"></script>
+<script src="https://hpneo.github.io/gmaps/gmaps.js"></script>
+<script type="text/javascript">
+	var map;
+	$(document).ready(function() {
+		map = new GMaps({
+			div: '#map',
+			lat: 41.008238,
+			lng: 28.978359
+		});
+		map.setZoom(12);
+	});
+
+	function cleanRoutes() {
+		map.cleanRoute();
+	};
+
+	function drawRoutes() {
+		// 41.008238, 28.978359
+		// 41.014450, 28.954124
+
+		var lat1a = $("#lat1a").val();
+		var lat2a = $("#lat2a").val();
+		var lng1a = $("#lng1a").val();
+		var lng2a = $("#lng2a").val();
+
+		var lat1b = $("#lat1b").val();
+		var lat2b = $("#lat2b").val();
+		var lng1b = $("#lng1b").val();
+		var lng2b = $("#lng2b").val();
+		
+		if (lat1a != "" && lat2a != "" && lng1a != "" && lng2a != "") {
+			map.drawRoute({
+				origin: [lat1a, lng1a],
+		       	destination: [lat2a, lng2a],
+		        travelMode: 'driving',
+		        strokeColor: '#00BFFF',
+		        strokeOpacity: 0.8,
+		        strokeWeight: 5
+		    });
+		    
+			console.log("Route A is drawn");
+		};
+
+		if (lat1b != "" && lat2b != "" && lng1b != "" && lng2b != "") {
+
+			map.drawRoute({
+				origin: [lat1b, lng1b],
+		       	destination: [lat2b, lng2b],
+		        travelMode: 'driving',
+		        strokeColor: '#FF0000',
+		        strokeOpacity: 0.8,
+		        strokeWeight: 5
+		    });
+
+		    console.log("Route B is drawn");
+		};
+	};
+</script>
+</body>
+</html>
