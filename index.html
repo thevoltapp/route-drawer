@@ -3,9 +3,13 @@
 <head>
     <title>Route Drawer</title>
     <style type="text/css">
+   		p {
+   			margin: 10px;
+   		}
     	#map {
     		width: 800px;
     		height: 500px;
+    		margin: 10px;
     	}
     </style>
 </head>
@@ -29,7 +33,8 @@
 <script src="https://maps.google.com/maps/api/js?sensor=true"></script>
 <script src="https://hpneo.github.io/gmaps/gmaps.js"></script>
 <script type="text/javascript">
-	var map;
+	var map;	
+
 	$(document).ready(function() {
 		map = new GMaps({
 			div: '#map',
@@ -39,9 +44,15 @@
 		map.setZoom(12);
 	});
 
-	function cleanRoutes() {
-		map.cleanRoute();
-	};
+	// Get values from URL
+	$("#lat1a").val(getParameterByName("lat1a"));
+	$("#lat2a").val(getParameterByName("lat2a"));
+	$("#lng1a").val(getParameterByName("lng1a"));
+	$("#lng2a").val(getParameterByName("lng2a"));
+	$("#lat1b").val(getParameterByName("lat1b"));
+	$("#lat2b").val(getParameterByName("lat2b"));
+	$("#lng1b").val(getParameterByName("lng1b"));
+	$("#lng2b").val(getParameterByName("lng2b"));
 
 	function drawRoutes() {
 		// 41.008238, 28.978359
@@ -84,6 +95,20 @@
 		    console.log("Route B is drawn");
 		};
 	};
+
+	function cleanRoutes() {
+		map.cleanRoute();
+	};
+
+	function getParameterByName(name, url) {
+	    if (!url) url = window.location.href;
+	    name = name.replace(/[\[\]]/g, "\\$&");
+	    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+	        results = regex.exec(url);
+	    if (!results) return null;
+	    if (!results[2]) return '';
+	    return decodeURIComponent(results[2].replace(/\+/g, " "));
+	}
 </script>
 </body>
 </html>
